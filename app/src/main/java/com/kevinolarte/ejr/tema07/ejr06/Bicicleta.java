@@ -16,19 +16,7 @@ public class Bicicleta {
     private final String fechaFabrica;
     private final int existentcias; //Calculado, creo ??? 
 
-    public Bicicleta(){
-        
-        
-        //marcas[Randmos.rnd.nextInt(0, marcas.length)]       
-        this(
-            Conf.fakerEs.company().name(),
-            Conf.fakerEs.commerce().productName(),
-            Randmos.rnd.nextDouble(0, 10),
-            Randmos.rnd.nextInt(45, 80),
-            Randmos.rnd.nextInt(0, 10) > 5 ? true : false,
-            "12-12-2024"
-            );
-    }
+    
     public Bicicleta(String marca, String modelo, double peso, double tamañoRuedas, boolean motor, String fechaFabrica){
         this.referecncia = String.valueOf(++cont);
         this.marca = marca;
@@ -41,7 +29,9 @@ public class Bicicleta {
 
     }
 
-
+    public Bicicleta obtenercopia(){
+        return new Bicicleta(this.marca, this.modelo, this.peso, this.tamañoRuedas, this.motor, this.fechaFabrica);
+    }
     
     //#region Getters
     public String getReferecncia() {

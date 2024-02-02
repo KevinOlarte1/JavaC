@@ -7,11 +7,8 @@ import com.kevinolarte.lib.Input;
 import com.kevinolarte.lib.Menus;
 
 public class MainEjer06 {
-    private static final int LIMIT_VAMOR_DEFAULT = 10;
-    private final Bicicleta bicis[];
-    private int posActual = 0;
+    private Tienda t = new Tienda();
     public MainEjer06(){
-        this.bicis = new Bicicleta[LIMIT_VAMOR_DEFAULT];
         boolean salir = false;
         do{
             Menus.print(new String[]{" GESTIÓN DE BICICLETAS ", "Añadir bicicletas...","Veder bicicletas","Consultar bicicleta...", "Mostrar stock"});
@@ -82,43 +79,36 @@ public class MainEjer06 {
     /**Buscar una bici por Referencia */
     private void consRef(){
         String referencia = String.valueOf(Input.pedirIntPositivo("INgresa la referencia"));
-        boolean encontrado = false;
-        for (int i = 0; i < posActual; i++) {
-            if (bicis[i].getReferecncia().equals(referencia)) {
-                System.out.println(bicis[i].toString());
-                encontrado = true;
-            }
-        }
-        if (encontrado == false) {
-            System.out.println("Fuera de Stock");
-        }
+        Bicicleta biciCopia = t.obtenerBicisRef(referencia);
+        if (biciCopia == null) 
+            System.out.println("No existe esa bici");
+        else    
+            System.out.println(biciCopia.toString());
+        
     }
+
     /**Buscar una bici por Marca */
     private void consMarc(){
         String marca = Input.pedirStringTexto("Ingresa la marca de la bici");
-        boolean encontrado = false;
-        for (int i = 0; i < posActual; i++) {
-            if (bicis[i].getMarca().equals(marca)) {
-                System.out.println(bicis[i].toString());
-                encontrado = true;
+        Bicicleta[] bicidMar = t.obtenerBicisMarca(marca); 
+        if (bicidMar == null) 
+            System.out.println("No se ha encontrado");
+        else{
+            for (Bicicleta bicicleta : bicidMar) {
+                System.out.println(bicicleta.toString());
             }
-        }
-        if (encontrado == false) {
-            System.out.println("Fuera de Stock");
         }
     }
     /**Buscar una bici por Modelo */
     private void consMod(){
         String modelo = Input.pedirStringTexto("Ingresa el modelo de la bici");
-        boolean encontrado = false;
-        for (int i = 0; i < posActual; i++) {
-            if (bicis[i].getModelo().equals(modelo)) {
-                System.out.println(bicis[i].toString());
-                encontrado = true;
+        Bicicleta[] bicidMod = t.obtenerBicisModelo(modelo); 
+        if (bicidMod == null) 
+            System.out.println("No se ha encontrado");
+        else{
+            for (Bicicleta bicicleta : bicidMod) {
+                System.out.println(bicicleta.toString());
             }
-        }
-        if (encontrado == false) {
-            System.out.println("Fuera de Stock");
         }
     }
 
@@ -130,41 +120,32 @@ public class MainEjer06 {
         double tamañoRuedas = Input.pedirDoublePositivo("Ingresa el tamaño de la rueda"); 
         boolean motor = Input.pedirBoolean("La bici tine motor?"); 
         String fehca = Input.pedirFecha("Ingrese la fecha de la fabricacion");
-        bicis[posActual] = new Bicicleta(marca, modelo, peso, tamañoRuedas, motor, fehca);
-        posActual++;
+        t.comprarBici(marca, modelo, peso, tamañoRuedas, motor, fehca);
     }
 
     /** Metodo para vender las bicis */
     private void venderBici(){
-        if (posActual == 0) {
+        String referencai = String.valueOf(Input.pedirIntPositivo("Ingrese el numero de referencia"));
+        int result = t.venderBici(referencai);
+        if (result > -1) 
+            System.out.println("Bici " + referencai + "ha sido vendida");
+        else if(result == -1)
             System.out.println("No hay Stock");
-        }
-        else{
-            String referencai = String.valueOf(Input.pedirIntPositivo("Ingrese el numero de referencia"));
-            for (int i = 0; i < posActual; i++) {
-                if (bicis[i].getReferecncia().equals(referencai)) {
-                    bicis[i] = null;
-                    if (posActual > 1) {
-                        bicis[i] = bicis[posActual];
-                        bicis[posActual] = null;
-                    }
-                    posActual --;
-                }
-            }
-        }
-        
+        else
+            System.out.println("La referencia " + referencai + " no existe");
         
     }
 
 
     /** Metodo para mostar el stock de las bicis. */
     private void mostarStock(){
-        if (posActual == 0) {
-            System.out.println("No hay Stock");
+        Bicicleta[] sotck = t.obtenerStock();
+        if (sotck == null) {
+            System.out.println("No hay stock");
         }
         else{
-            for (int i = 0; i < posActual; i++) {
-                System.out.println(bicis[i].toString());
+            for (Bicicleta bicicleta : sotck) {
+                System.out.println(bicicleta.toString());
             }
         }
     }

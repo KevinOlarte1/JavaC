@@ -4,7 +4,7 @@ public class Menus {
     private static final String limitT ="*************************";
     private static final String extremo = "**";
     private static final String acabar = "--------------------------";
-    public static void print(String[] args){
+    public static void print(String[] args){ /// n8rar oarametrso
         
         if (args.length < 2) {
             System.out.println("Muy corto");
