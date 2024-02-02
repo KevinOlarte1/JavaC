@@ -4,7 +4,10 @@ package javac;
  */
 import com.kevinolarte.ejr.*;
 import com.kevinolarte.ejr.tema07.ejr03.Ejr03;
+import com.kevinolarte.ejr.tema07.ejr06.MainEjer06;
 import com.kevinolarte.lib.Comprobate;
+
+import net.datafaker.providers.entertainment.NewGirl;
 
 
 public class App {
@@ -13,8 +16,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-        Ejr03 e = new Ejr03();
+        MainEjer06 E = new MainEjer06();
         
     }
 }

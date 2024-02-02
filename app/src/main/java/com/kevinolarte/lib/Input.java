@@ -159,5 +159,17 @@ public class Input {
 
         return ingreso;
     }
+
+    public static boolean pedirBoolean(String mensaje){
+        String ingreso = " ";
+        mensaje = mensaje.equals(" ") ? "Si o No" : mensaje;
+
+        do{
+            System.out.println(mensaje);
+            ingreso = Input.scanner.nextLine();
+        }while(ingreso.toLowerCase().equals("si") == false && ingreso.toLowerCase().equals("no") == false);
+
+        return ingreso.toLowerCase().equals("si") ? true : false;
+    }
     
 }
