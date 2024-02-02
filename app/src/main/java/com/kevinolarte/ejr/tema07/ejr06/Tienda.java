@@ -53,7 +53,7 @@ public class Tienda {
         }
         Bicicleta[] stock = new Bicicleta[posActual];
         for (int i = 0; i < posActual; i++) {
-            stock[i] = bicis[i].obtenercopia();
+            stock[i] = new Bicicleta(bicis[i]);
         }
         return stock;
     }
@@ -78,7 +78,7 @@ public class Tienda {
         int posicioncopia = 0;
         for (int i = 0; i < posActual; i++) {
             if (bicis[i].getModelo().equals(modelo)) {
-                modeloBici[posicioncopia] = bicis[i]; 
+                modeloBici[posicioncopia] = new Bicicleta(bicis[i]); 
                 encontrado = true;
                 posicioncopia++;
             }
@@ -109,7 +109,7 @@ public class Tienda {
         int posicioncopia = 0;
         for (int i = 0; i < posActual; i++) {
             if (bicis[i].getMarca().equals(marca)) {
-                marcaBici[posicioncopia] = bicis[i].obtenercopia(); 
+                marcaBici[posicioncopia] = new Bicicleta(bicis[i]); 
                 encontrado = true;
                 posicioncopia++;
             }
@@ -140,7 +140,7 @@ public class Tienda {
         int posicioncopia = 0;
         for (int i = 0; i < posActual; i++) {
             if (bicis[i].getMarca().equals(marca)) {
-                marcaBici = bicis[i].obtenercopia(); 
+                marcaBici = new Bicicleta(bicis[i]); 
                 encontrado = true;
                 posicioncopia++;
             }

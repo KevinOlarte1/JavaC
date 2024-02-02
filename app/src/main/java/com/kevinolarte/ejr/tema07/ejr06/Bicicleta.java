@@ -17,8 +17,8 @@ public class Bicicleta {
     private final int existentcias; //Calculado, creo ??? 
 
     
-    public Bicicleta(String marca, String modelo, double peso, double tamañoRuedas, boolean motor, String fechaFabrica){
-        this.referecncia = String.valueOf(++cont);
+    private Bicicleta(String referencia, String marca, String modelo, double peso, double tamañoRuedas, boolean motor, String fechaFabrica){
+        this.referecncia = referencia;
         this.marca = marca;
         this.modelo = modelo;
         this.peso = peso;
@@ -26,12 +26,18 @@ public class Bicicleta {
         this.motor = motor;
         this.fechaFabrica = fechaFabrica;
         this.existentcias = 1;
-
+        
     }
 
-    public Bicicleta obtenercopia(){
-        return new Bicicleta(this.marca, this.modelo, this.peso, this.tamañoRuedas, this.motor, this.fechaFabrica);
+    public Bicicleta(String marca, String modelo, double peso, double tamañoRuedas, boolean motor, String fechaFabrica) {
+        this(String.valueOf(++cont), marca, modelo, peso, tamañoRuedas, motor, fechaFabrica);
     }
+
+    public Bicicleta(Bicicleta b1){
+        this(b1.getReferecncia(), b1.getMarca(), b1.getModelo(), b1.getPeso(), b1.getTamañoRuedas(), b1.isMotor(), b1.getFechaFabrica());
+    } 
+
+    
     
     //#region Getters
     public String getReferecncia() {
