@@ -1,10 +1,5 @@
 package com.kevinolarte.ejr.tema07.ejr06;
 
-import java.util.Random;
-
-import com.kevinolarte.lib.Conf;
-import com.kevinolarte.lib.Randmos;
-
 public class Bicicleta {
     private static int cont = 0;
     private final String referecncia;

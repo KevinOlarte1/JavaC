@@ -5,7 +5,10 @@ package javac;
 import com.kevinolarte.ejr.*;
 import com.kevinolarte.ejr.tema07.ejr03.Ejr03;
 import com.kevinolarte.ejr.tema07.ejr06.MainEjer06;
+import com.kevinolarte.ejr.tema07.ejr07.CentroSalud;
+import com.kevinolarte.ejr.tema07.ejr07.MainEjer07;
 import com.kevinolarte.lib.Comprobate;
+import java.time.LocalDate;
 
 import net.datafaker.providers.entertainment.NewGirl;
 
@@ -16,7 +19,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        MainEjer06 E = new MainEjer06();
-        
+        MainEjer07 m = new MainEjer07();
+      
     }
 }

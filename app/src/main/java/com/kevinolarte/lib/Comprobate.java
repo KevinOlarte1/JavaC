@@ -27,7 +27,8 @@ public class Comprobate {
      * @return devuelve un booleano comprobando si es una fecha.
      */
     public static boolean comprobarFecha(String palabra){
-        boolean verdad = palabra.matches("^(0[1-9]|[12][0-9]|3[01])[/\\-\\ ](0[1-9]|1[0-2])[/\\-\\ ]\\d{4}$");
+        boolean verdad = palabra.matches("\\d{4}[/\\-:](0[1-9]|1[0-2])[/\\-:](0[1-9]|[12][0-9]|3[01])");
+        //  
         
         return verdad;
     }

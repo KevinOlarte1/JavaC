@@ -1,7 +1,5 @@
 package com.kevinolarte.ejr.tema07.ejr06;
 
-import com.kevinolarte.lib.Input;
-
 public class Tienda {
     private static final int LIMIT_VAMOR_DEFAULT = 10;
     private final Bicicleta bicis[];
@@ -137,12 +135,11 @@ public class Tienda {
 
         Bicicleta marcaBici = null; 
         boolean encontrado = false;
-        int posicioncopia = 0;
         for (int i = 0; i < posActual; i++) {
             if (bicis[i].getMarca().equals(marca)) {
                 marcaBici = new Bicicleta(bicis[i]); 
                 encontrado = true;
-                posicioncopia++;
+                
             }
         }
         if (encontrado == false) {

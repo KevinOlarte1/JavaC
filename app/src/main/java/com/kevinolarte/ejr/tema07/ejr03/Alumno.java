@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import com.kevinolarte.lib.Conf;
 import com.kevinolarte.lib.Randmos;
 
-import net.datafaker.Faker;
 
 public class Alumno {
      
