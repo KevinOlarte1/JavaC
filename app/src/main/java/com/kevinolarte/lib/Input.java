@@ -41,10 +41,11 @@ public class Input {
     public static String pedirFecha(String mensaje){
         String ingreso = "";
         mensaje = mensaje == " " ? "Ingrese una fecha" : mensaje;
-
+        
         do{
             System.out.println(mensaje);
             ingreso = scanner.nextLine();
+            ingreso = ingreso.replaceAll("[:/]", "-");
         }while(!Comprobate.comprobarFecha(ingreso));
 
         return ingreso;

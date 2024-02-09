@@ -27,10 +27,10 @@ public class CentroSalud {
      * @return devuelve un booleano diciendo si ha sido posible.    
      */
     public boolean atenderPaciente(String sip, double temperatura, double pulsaciones, double arteriaSis, double arteriaDia){
-        if (!validarSip(sip) || temperatura < 0 || pulsaciones < 0 || arteriaSis < 0 || arteriaDia < 0) return false;
+        if (!validarSip(sip) || temperatura < 1 || pulsaciones < 1 || arteriaSis < 1 || arteriaDia < 1) return false;
     
         for (int i = 0; i < posActualTotal; i++) {
-            if (pacientesTotal[i].getPaciente().getSip().equals(sip) && pacientesTotal[i].getConstantes() == null) {
+            if (pacientesTotal[i].getPaciente().getSip().equals(sip) && pacientesTotal[i].getConstantes()[0] == 0) {
                 pacientesTotal[i].chequeo(temperatura, pulsaciones, arteriaSis, arteriaDia);
                 return true;
             }
@@ -46,11 +46,20 @@ public class CentroSalud {
      * @return
      */
     public boolean darAltaPaciente(String sip, LocalDate fecha, String motivo){
-        if(LocalDate.now().isBefore(fecha)) return false;
+        if(obtenerPacientesSip(sip)[obtenerPacientesSip(sip).length -1].getPaciente().getFecha().isAfter(fecha)) return false;
 
         for (int i = 0; i < posActualTotal; i++) {
-            if (pacientesTotal[i].getPaciente().getSip().equals(sip) && pacientesTotal[i].isAlta() == false) {
+            if (pacientesTotal[i].getPaciente().getSip().equals(sip) && pacientesTotal[i].isPoderAlta()) {
                 pacientesTotal[i].darAlta(fecha, motivo);
+                //Sacar ese pacente de nuestros pacientes diarios para que pueda entrar en espera otro paciente.
+                for (int j = 0; j < posActual; j++) {
+                    if (pacientes[j].getSip().equals(sip)) 
+                    {
+                        pacientes[j] = pacientes[posActual -1];
+                        pacientes[posActual - 1] = null;
+                    }
+                        
+                }
                 return true;
             }
         }
@@ -69,11 +78,11 @@ public class CentroSalud {
      * @return devuelve un booleano si se ha podido realizar
      */
     public boolean nuevoPaciente(String sip, String nombre, boolean sexo,int edad, LocalDate fehca, /*String hora ,*/ String sintomas){
-        if (!validarSip(sip) || edad < 0) return false;
+        if (!validarSip(sip) || edad < 0 || posActual == LIMIT_VALOR_DEFAULT) return false;
         if(obtenerPacientesSip(sip) != null){
-            Consultas pacientehistoruco[] = obtenerPacientesSip(sip);
-            
-            if (pacientehistoruco[pacientehistoruco.length -1].isAlta() == false) return false; 
+            Consultas pacientehistoruco = obtenerPacientesSip(sip)[cantidadPacientesSip(sip) -1];
+            if ( pacientehistoruco.getMotivo() == null) return false; 
+    
         }
         pacientes[posActual++] = new Paciente(sip,nombre,sexo,edad,fehca);
         pacientesTotal[posActualTotal++] = new Consultas(new Paciente(pacientes[posActual-1]), sintomas);
@@ -105,9 +114,11 @@ public class CentroSalud {
      * @return devuelve los pacientes con todo.
      */
     public Consultas[] otenerPacientesFecha(LocalDate fecha){ //? pacienets totalde al otra clase esperar
-        if (LocalDate.now().isBefore(fecha) || cantidadPacientesFecha(fecha, LocalDate.now()) < 1) return null;
+        if (LocalDate.now().isBefore(fecha) == true || cantidadPacientesFecha(fecha, LocalDate.now()) < 1) return null;
+        System.out.println("metodo no cumple bien");
         int cant = cantidadPacientesFecha(fecha, LocalDate.now());
         int cont = 0;
+        
         Consultas pacientesFecha[] = new Consultas[cant];
         for (int i = 0; i < posActualTotal; i++) {
             if (fecha.isBefore(pacientesTotal[i].getPaciente().getFecha()) && LocalDate.now().isAfter(pacientesTotal[i].getPaciente().getFecha())) {
@@ -148,7 +159,7 @@ public class CentroSalud {
         double mujeresPorcentaje = 0;
         int cont = 0;
         for (int i = 0; i < posActualTotal; i++) {
-            if (pacientesTotal[i].isAlta() == false) {
+            if (pacientesTotal[i].isPoderAlta()) {
                 cont++;
                 temperaturaMedia += pacientesTotal[i].getConstantes()[0];
                 pulsacionesMedia += pacientesTotal[i].getConstantes()[1]; // The static method getPulsaciones() from the type Consultas should be accessed in a static wayJava(603979893)
@@ -220,6 +231,24 @@ public class CentroSalud {
      */
     private boolean validarSip(String sip){
         return sip.matches("\\d{8}");
+    }
+
+
+    /**
+     * Metodo para sacar el ultimo paciente actual
+     * @param sip
+     * @return
+     */
+    public Consultas ultimoPacienteSip(String sip){
+        if (cantidadPacientesSip(sip) == 0) return null;
+
+        
+        for (int i = posActualTotal -1; i >= 0; i--) {
+            if (pacientesTotal[i].getPaciente().getSip().equals(sip)) {
+                return pacientesTotal[i];
+            }
+        }
+        return null;
     }
 
 }

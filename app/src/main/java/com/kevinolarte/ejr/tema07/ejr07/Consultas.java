@@ -14,7 +14,7 @@ public class Consultas {
 
     private double constantes[] = new double[4];
 
-    private boolean alta = false;
+    private boolean poderalta = false;
     private LocalDate fechaAlta;  
     private String motivo;
 
@@ -25,12 +25,12 @@ public class Consultas {
     }
 
     public void chequeo(double temperatura, double pulsaciones,double arteriaSis, double arteriaDia){
-        if (temperatura > 0 && pulsaciones > 0 && arteriaDia > 0 && arteriaSis > 0) {
+        if (temperatura >= 1 && pulsaciones >= 1 && arteriaDia >= 1 && arteriaSis >= 1) {
             this.constantes[TEMPERATURA] = temperatura;
             this.constantes[PULSACIONES] = pulsaciones;
             this.constantes[ARTERIA_SISTOLICA] = arteriaSis;
             this.constantes[ARTERIA_DIASTOLICA] = arteriaDia;
-            
+            this.poderalta = true;
         }
        
         
@@ -43,10 +43,10 @@ public class Consultas {
      * @return devuelv un booleano true si se ha podido hacer
      */
     public void darAlta(LocalDate fecha,String motivo){
-        if(!LocalDate.now().isBefore(fecha)){
+        if(LocalDate.now().isBefore(fecha)){
             this.fechaAlta = fecha;
             this.motivo= motivo;
-            this.alta = true;
+            this.poderalta = false;
         }
     }
 
@@ -55,8 +55,8 @@ public class Consultas {
         return paciente;
     }
 
-    public boolean isAlta() {
-        return alta;
+    public boolean isPoderAlta() {
+        return poderalta;
     }
     
     public String getSimtomas() {
