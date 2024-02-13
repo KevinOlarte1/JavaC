@@ -3,63 +3,69 @@ package com.kevinolarte.lib;
 import java.util.Scanner;
 
 public class Menue {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final int CAPACIDAD_INI = 5;
-    private String texto;
+    private static Scanner scanner = new Scanner(System.in);
+    private static final int CAPACIDAD_INICIAL = 5;
+    private final String texto;
     private Menue[] opciones;
-    private int numOpcion;
+    private int numOpciones;
 
-    public Menue(String texto){
+    public Menue(String texto) {
         this.texto = texto;
         this.opciones = null;
-        this.numOpcion = 0;
+        numOpciones = 0;
     }
 
-    public Menue addOpciones(String texto){
-        if (opciones == null) {
-            opciones = new Menue[CAPACIDAD_INI];
-        }
-        opciones[numOpcion] = new Menue(texto);
-        if (numOpcion == opciones.length) { // Array esta lleno!!!
-            ampliarCapacidad();
-        }
-        Menue resultao = new Menue(texto);
-        opciones[numOpcion++] = resultao;
-        return resultao;
-    }
-
-    public int mostarMenu(){
-        boolean valido;
-        int ingreso;
-        do{
-            System.out.println(this);
-            ingreso = Integer.parseInt(scanner.nextLine());
-            valido = ingreso <= 1 || ingreso >numOpcion;
-        }while(!valido);
-        return ingreso;
-    }
-
-
-    public String toString(){
-        StringBuilder stb = new StringBuilder();
-        stb.append("***").append(texto).append("***");
-        for (int i = 0; i < numOpcion; i++) {
-            stb.append(i+1).append(opciones[i].texto).append("...\n");
-        }
-        stb.append("-------------------------------\n");
-        stb.append("0. Para salir\n");
-        stb.append("Eligue una opcion:");
-
-        return stb.toString();
-        
-    }
-
-    // I M P O R T A N T E  (OPTIMIZAR PARA SNAKE)
-    private void ampliarCapacidad(){ //Metodo para ampliar copia
-        Menue copia[] = new Menue[opciones.length * 2];
-        for (int i = 0; i < opciones.length; i++) {
+    private void ampliarCapacidad(){
+        Menue[] copia = new Menue[opciones.length * 2];
+        for (int i = 0; i <opciones.length ; i++) {
             copia[i] = opciones[i];
         }
         opciones = copia;
     }
+
+    public Menue addOpcion(String texto){
+        if (opciones == null){
+            opciones = new Menue[CAPACIDAD_INICIAL];
+        }
+        if (numOpciones == opciones.length){ //El array esta bien
+
+        }
+        Menue resultado = new Menue(texto);
+        opciones[numOpciones] = resultado;
+        numOpciones++;
+        return resultado;
+    }
+    public int mostrarMenu(){
+        boolean valido;
+        int opcion;
+        do {
+            System.out.println(this);
+            opcion = Integer.parseInt(scanner.nextLine());
+            valido = opcion >=1 && opcion <= numOpciones;
+
+        }while (!valido);
+        return opcion;
+    }
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("***").append(texto).append("***");
+        for (int i = 0; i <numOpciones; i++) {
+            sb.append(i+1).append(opciones[i].texto).append("\n");
+        }
+        sb.append("----------------------------");
+        sb.append("Elige una opcion: ");
+        return sb.toString();
+    }
+    public String toStringLetras(){
+        String letras = "abcdefghijklmnñopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder();
+        sb.append("***").append(texto).append("***");
+        for (int i = 0; i <numOpciones; i++) {
+            sb.append(letras.charAt(i)).append(opciones[i].texto).append("\n");
+        }
+        sb.append("----------------------------");
+        sb.append("Elige una opcion: ");
+        return sb.toString();
+    }
+    
 }
