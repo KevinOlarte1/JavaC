@@ -19,7 +19,50 @@ public class App {
     }
 
     public static void main(String[] args) {
-        MainEjer07 m = new MainEjer07();
+        int bodyx[] = new int[5];
+        int bodyy[] = new int[5];
+        for (int i = 0; i < 5; i++) {
+            bodyx[i] = i +1;
+            bodyy[i] = i + 1;
+        }
+        System.out.println( " x " + bodyx.length + " y " + bodyy.length);
+        for (int i = 0; i < bodyy.length; i++) {
+            System.out.println(bodyx[i] + " " + bodyy[i]);
+        }
+        int x = bodyx[0];
+        int y = bodyy[0];
+        int direcction = 1;
+        switch (direcction) {
+            case 1:
+            
+                x = bodyx[0] + 1;
+                break;
+            case -1:
+                x = bodyx[0] - 1;
+                break;
+            case 2:
+                y = bodyy[0] - 1;
+                break;
+            case -2:
+                y = bodyy[0] + 1;
+        
+            default:
+                break;
+        }
+
+        //Be cerful with problems in finish, if the snake eat his tail.
+        int[] newArrayx = new int[bodyx.length];
+        int[] newArrayy = new int[bodyx.length];
+        newArrayx[0] = x;
+        newArrayy[0] = y;
+        System.arraycopy(bodyx, 0, newArrayx, 1, bodyx.length - 1); 
+        System.arraycopy(bodyy, 0, newArrayy, 1, bodyy.length - 1);
+        bodyx = newArrayx;
+        bodyy = newArrayy;
+        System.out.println( " x " + bodyx.length + " y " + bodyy.length);
+        for (int i = 0; i < bodyy.length; i++) {
+            System.out.println(bodyx[i] + " " + bodyy[i]);
+        }
       
     }
 }
